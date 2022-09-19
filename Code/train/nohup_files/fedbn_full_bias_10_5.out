@@ -1,0 +1,377 @@
+nohup: ignoring input
+/home/jiahui/miniconda3/lib/python3.9/site-packages/requests/__init__.py:102: RequestsDependencyWarning: urllib3 (1.26.8) or chardet (5.0.0)/charset_normalizer (2.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({})/charset_normalizer ({}) doesn't match a supported "
+Device: cuda
+Using downloaded and verified file: /home/jiahui/FL-NeurIPS-2022/Code/datasets/../../Data/SVHN/train_32x32.mat
+Using downloaded and verified file: /home/jiahui/FL-NeurIPS-2022/Code/datasets/../../Data/SVHN/test_32x32.mat
+Client alpha: [0.08824204203850883, 0.10773912122691735, 0.010722878808379464, 0.7050539158876855, 0.08824204203850883]
+============ Communication round 0 ============
+============ Train epoch 0 ============
+ MNIST      | Train Loss: 0.1005 | Train Acc: 0.9746
+ SVHN       | Train Loss: 0.5660 | Train Acc: 0.8252
+ USPS       | Train Loss: 0.2195 | Train Acc: 0.9524
+ SynthDigits| Train Loss: 0.1049 | Train Acc: 0.9680
+ MNIST-M    | Train Loss: 0.3286 | Train Acc: 0.8992
+============ Train epoch 1 ============
+ MNIST      | Train Loss: 0.0332 | Train Acc: 0.9908
+ SVHN       | Train Loss: 0.3119 | Train Acc: 0.9055
+ USPS       | Train Loss: 0.0618 | Train Acc: 0.9879
+ SynthDigits| Train Loss: 0.0334 | Train Acc: 0.9896
+ MNIST-M    | Train Loss: 0.1235 | Train Acc: 0.9619
+============ Train epoch 2 ============
+ MNIST      | Train Loss: 0.0204 | Train Acc: 0.9944
+ SVHN       | Train Loss: 0.2295 | Train Acc: 0.9316
+ USPS       | Train Loss: 0.0352 | Train Acc: 0.9942
+ SynthDigits| Train Loss: 0.0200 | Train Acc: 0.9938
+ MNIST-M    | Train Loss: 0.0762 | Train Acc: 0.9769
+============ Train epoch 3 ============
+ MNIST      | Train Loss: 0.0139 | Train Acc: 0.9966
+ SVHN       | Train Loss: 0.1758 | Train Acc: 0.9487
+ USPS       | Train Loss: 0.0262 | Train Acc: 0.9963
+ SynthDigits| Train Loss: 0.0136 | Train Acc: 0.9958
+ MNIST-M    | Train Loss: 0.0499 | Train Acc: 0.9854
+============ Train epoch 4 ============
+ MNIST      | Train Loss: 0.0091 | Train Acc: 0.9979
+ SVHN       | Train Loss: 0.1332 | Train Acc: 0.9607
+ USPS       | Train Loss: 0.0156 | Train Acc: 0.9992
+ SynthDigits| Train Loss: 0.0093 | Train Acc: 0.9972
+ MNIST-M    | Train Loss: 0.0328 | Train Acc: 0.9910
+============ Test ============
+ MNIST      | Test  Loss: 0.7414 | Test  Acc: 0.8142
+ SVHN       | Test  Loss: 1.5054 | Test  Acc: 0.5985
+ USPS       | Test  Loss: 1.9108 | Test  Acc: 0.6413
+ SynthDigits| Test  Loss: 0.0737 | Test  Acc: 0.9796
+ MNIST-M    | Test  Loss: 1.6450 | Test  Acc: 0.6040
+============ Communication round 1 ============
+============ Train epoch 0 ============
+ MNIST      | Train Loss: 0.0532 | Train Acc: 0.9837
+ SVHN       | Train Loss: 0.3662 | Train Acc: 0.8943
+ USPS       | Train Loss: 0.0766 | Train Acc: 0.9772
+ SynthDigits| Train Loss: 0.0156 | Train Acc: 0.9951
+ MNIST-M    | Train Loss: 0.2827 | Train Acc: 0.9104
+============ Train epoch 1 ============
+ MNIST      | Train Loss: 0.0188 | Train Acc: 0.9940
+ SVHN       | Train Loss: 0.2119 | Train Acc: 0.9375
+ USPS       | Train Loss: 0.0173 | Train Acc: 0.9951
+ SynthDigits| Train Loss: 0.0100 | Train Acc: 0.9970
+ MNIST-M    | Train Loss: 0.0952 | Train Acc: 0.9700
+============ Train epoch 2 ============
+ MNIST      | Train Loss: 0.0116 | Train Acc: 0.9966
+ SVHN       | Train Loss: 0.1503 | Train Acc: 0.9562
+ USPS       | Train Loss: 0.0092 | Train Acc: 0.9982
+ SynthDigits| Train Loss: 0.0070 | Train Acc: 0.9979
+ MNIST-M    | Train Loss: 0.0565 | Train Acc: 0.9822
+============ Train epoch 3 ============
+ MNIST      | Train Loss: 0.0068 | Train Acc: 0.9983
+ SVHN       | Train Loss: 0.1075 | Train Acc: 0.9691
+ USPS       | Train Loss: 0.0049 | Train Acc: 0.9989
+ SynthDigits| Train Loss: 0.0051 | Train Acc: 0.9986
+ MNIST-M    | Train Loss: 0.0332 | Train Acc: 0.9904
+============ Train epoch 4 ============
+ MNIST      | Train Loss: 0.0053 | Train Acc: 0.9986
+ SVHN       | Train Loss: 0.0768 | Train Acc: 0.9774
+ USPS       | Train Loss: 0.0041 | Train Acc: 0.9997
+ SynthDigits| Train Loss: 0.0036 | Train Acc: 0.9990
+ MNIST-M    | Train Loss: 0.0229 | Train Acc: 0.9937
+============ Test ============
+ MNIST      | Test  Loss: 0.3865 | Test  Acc: 0.8887
+ SVHN       | Test  Loss: 0.7204 | Test  Acc: 0.8459
+ USPS       | Test  Loss: 0.8053 | Test  Acc: 0.7763
+ SynthDigits| Test  Loss: 0.0170 | Test  Acc: 0.9956
+ MNIST-M    | Test  Loss: 1.3074 | Test  Acc: 0.6485
+============ Communication round 2 ============
+============ Train epoch 0 ============
+ MNIST      | Train Loss: 0.0469 | Train Acc: 0.9860
+ SVHN       | Train Loss: 0.3368 | Train Acc: 0.9028
+ USPS       | Train Loss: 0.0705 | Train Acc: 0.9802
+ SynthDigits| Train Loss: 0.0039 | Train Acc: 0.9989
+ MNIST-M    | Train Loss: 0.2609 | Train Acc: 0.9180
+============ Train epoch 1 ============
+ MNIST      | Train Loss: 0.0164 | Train Acc: 0.9950
+ SVHN       | Train Loss: 0.1788 | Train Acc: 0.9477
+ USPS       | Train Loss: 0.0186 | Train Acc: 0.9955
+ SynthDigits| Train Loss: 0.0034 | Train Acc: 0.9991
+ MNIST-M    | Train Loss: 0.0865 | Train Acc: 0.9718
+============ Train epoch 2 ============
+ MNIST      | Train Loss: 0.0090 | Train Acc: 0.9975
+ SVHN       | Train Loss: 0.1197 | Train Acc: 0.9646
+ USPS       | Train Loss: 0.0104 | Train Acc: 0.9971
+ SynthDigits| Train Loss: 0.0026 | Train Acc: 0.9993
+ MNIST-M    | Train Loss: 0.0446 | Train Acc: 0.9861
+============ Train epoch 3 ============
+ MNIST      | Train Loss: 0.0057 | Train Acc: 0.9985
+ SVHN       | Train Loss: 0.0790 | Train Acc: 0.9768
+ USPS       | Train Loss: 0.0067 | Train Acc: 0.9984
+ SynthDigits| Train Loss: 0.0026 | Train Acc: 0.9993
+ MNIST-M    | Train Loss: 0.0279 | Train Acc: 0.9919
+============ Train epoch 4 ============
+ MNIST      | Train Loss: 0.0045 | Train Acc: 0.9987
+ SVHN       | Train Loss: 0.0539 | Train Acc: 0.9844
+ USPS       | Train Loss: 0.0042 | Train Acc: 0.9990
+ SynthDigits| Train Loss: 0.0021 | Train Acc: 0.9994
+ MNIST-M    | Train Loss: 0.0170 | Train Acc: 0.9955
+============ Test ============
+ MNIST      | Test  Loss: 0.5949 | Test  Acc: 0.8234
+ SVHN       | Test  Loss: 0.6818 | Test  Acc: 0.8500
+ USPS       | Test  Loss: 0.6207 | Test  Acc: 0.8181
+ SynthDigits| Test  Loss: 0.0181 | Test  Acc: 0.9948
+ MNIST-M    | Test  Loss: 1.4495 | Test  Acc: 0.5844
+============ Communication round 3 ============
+============ Train epoch 0 ============
+ MNIST      | Train Loss: 0.0437 | Train Acc: 0.9870
+ SVHN       | Train Loss: 0.3092 | Train Acc: 0.9116
+ USPS       | Train Loss: 0.0818 | Train Acc: 0.9787
+ SynthDigits| Train Loss: 0.0017 | Train Acc: 0.9996
+ MNIST-M    | Train Loss: 0.2301 | Train Acc: 0.9277
+============ Train epoch 1 ============
+ MNIST      | Train Loss: 0.0143 | Train Acc: 0.9955
+ SVHN       | Train Loss: 0.1550 | Train Acc: 0.9535
+ USPS       | Train Loss: 0.0155 | Train Acc: 0.9960
+ SynthDigits| Train Loss: 0.0014 | Train Acc: 0.9997
+ MNIST-M    | Train Loss: 0.0717 | Train Acc: 0.9765
+============ Train epoch 2 ============
+ MNIST      | Train Loss: 0.0076 | Train Acc: 0.9977
+ SVHN       | Train Loss: 0.0951 | Train Acc: 0.9716
+ USPS       | Train Loss: 0.0076 | Train Acc: 0.9981
+ SynthDigits| Train Loss: 0.0012 | Train Acc: 0.9997
+ MNIST-M    | Train Loss: 0.0383 | Train Acc: 0.9877
+============ Train epoch 3 ============
+ MNIST      | Train Loss: 0.0052 | Train Acc: 0.9985
+ SVHN       | Train Loss: 0.0611 | Train Acc: 0.9817
+ USPS       | Train Loss: 0.0044 | Train Acc: 0.9995
+ SynthDigits| Train Loss: 0.0009 | Train Acc: 0.9998
+ MNIST-M    | Train Loss: 0.0207 | Train Acc: 0.9943
+============ Train epoch 4 ============
+ MNIST      | Train Loss: 0.0037 | Train Acc: 0.9991
+ SVHN       | Train Loss: 0.0416 | Train Acc: 0.9882
+ USPS       | Train Loss: 0.0040 | Train Acc: 0.9992
+ SynthDigits| Train Loss: 0.0008 | Train Acc: 0.9998
+ MNIST-M    | Train Loss: 0.0134 | Train Acc: 0.9967
+============ Test ============
+ MNIST      | Test  Loss: 0.2724 | Test  Acc: 0.9188
+ SVHN       | Test  Loss: 0.5561 | Test  Acc: 0.8671
+ USPS       | Test  Loss: 0.6268 | Test  Acc: 0.8161
+ SynthDigits| Test  Loss: 0.0149 | Test  Acc: 0.9955
+ MNIST-M    | Test  Loss: 1.0666 | Test  Acc: 0.6648
+============ Communication round 4 ============
+============ Train epoch 0 ============
+ MNIST      | Train Loss: 0.0369 | Train Acc: 0.9885
+ SVHN       | Train Loss: 0.2872 | Train Acc: 0.9168
+ USPS       | Train Loss: 0.0760 | Train Acc: 0.9802
+ SynthDigits| Train Loss: 0.0008 | Train Acc: 0.9998
+ MNIST-M    | Train Loss: 0.2121 | Train Acc: 0.9342
+============ Train epoch 1 ============
+ MNIST      | Train Loss: 0.0123 | Train Acc: 0.9961
+ SVHN       | Train Loss: 0.1310 | Train Acc: 0.9611
+ USPS       | Train Loss: 0.0176 | Train Acc: 0.9952
+ SynthDigits| Train Loss: 0.0010 | Train Acc: 0.9998
+ MNIST-M    | Train Loss: 0.0626 | Train Acc: 0.9791
+============ Train epoch 2 ============
+ MNIST      | Train Loss: 0.0071 | Train Acc: 0.9979
+ SVHN       | Train Loss: 0.0764 | Train Acc: 0.9770
+ USPS       | Train Loss: 0.0076 | Train Acc: 0.9978
+ SynthDigits| Train Loss: 0.0009 | Train Acc: 0.9998
+ MNIST-M    | Train Loss: 0.0318 | Train Acc: 0.9906
+============ Train epoch 3 ============
+ MNIST      | Train Loss: 0.0045 | Train Acc: 0.9988
+ SVHN       | Train Loss: 0.0466 | Train Acc: 0.9866
+ USPS       | Train Loss: 0.0048 | Train Acc: 0.9990
+ SynthDigits| Train Loss: 0.0007 | Train Acc: 0.9998
+ MNIST-M    | Train Loss: 0.0174 | Train Acc: 0.9953
+============ Train epoch 4 ============
+ MNIST      | Train Loss: 0.0029 | Train Acc: 0.9992
+ SVHN       | Train Loss: 0.0311 | Train Acc: 0.9913
+ USPS       | Train Loss: 0.0035 | Train Acc: 0.9993
+ SynthDigits| Train Loss: 0.0007 | Train Acc: 0.9999
+ MNIST-M    | Train Loss: 0.0111 | Train Acc: 0.9973
+============ Test ============
+ MNIST      | Test  Loss: 0.2213 | Test  Acc: 0.9313
+ SVHN       | Test  Loss: 0.5729 | Test  Acc: 0.8712
+ USPS       | Test  Loss: 0.5389 | Test  Acc: 0.8416
+ SynthDigits| Test  Loss: 0.0125 | Test  Acc: 0.9960
+ MNIST-M    | Test  Loss: 0.9860 | Test  Acc: 0.6919
+============ Communication round 5 ============
+============ Train epoch 0 ============
+ MNIST      | Train Loss: 0.0336 | Train Acc: 0.9900
+ SVHN       | Train Loss: 0.2672 | Train Acc: 0.9233
+ USPS       | Train Loss: 0.0692 | Train Acc: 0.9809
+ SynthDigits| Train Loss: 0.0005 | Train Acc: 0.9999
+ MNIST-M    | Train Loss: 0.1889 | Train Acc: 0.9408
+============ Train epoch 1 ============
+ MNIST      | Train Loss: 0.0118 | Train Acc: 0.9963
+ SVHN       | Train Loss: 0.1123 | Train Acc: 0.9663
+ USPS       | Train Loss: 0.0173 | Train Acc: 0.9944
+ SynthDigits| Train Loss: 0.0004 | Train Acc: 0.9999
+ MNIST-M    | Train Loss: 0.0512 | Train Acc: 0.9837
+============ Train epoch 2 ============
+ MNIST      | Train Loss: 0.0057 | Train Acc: 0.9982
+ SVHN       | Train Loss: 0.0611 | Train Acc: 0.9816
+ USPS       | Train Loss: 0.0073 | Train Acc: 0.9978
+ SynthDigits| Train Loss: 0.0006 | Train Acc: 0.9999
+ MNIST-M    | Train Loss: 0.0256 | Train Acc: 0.9923
+============ Train epoch 3 ============
+ MNIST      | Train Loss: 0.0041 | Train Acc: 0.9988
+ SVHN       | Train Loss: 0.0368 | Train Acc: 0.9898
+ USPS       | Train Loss: 0.0055 | Train Acc: 0.9984
+ SynthDigits| Train Loss: 0.0006 | Train Acc: 0.9999
+ MNIST-M    | Train Loss: 0.0151 | Train Acc: 0.9959
+============ Train epoch 4 ============
+ MNIST      | Train Loss: 0.0024 | Train Acc: 0.9994
+ SVHN       | Train Loss: 0.0251 | Train Acc: 0.9933
+ USPS       | Train Loss: 0.0032 | Train Acc: 0.9990
+ SynthDigits| Train Loss: 0.0005 | Train Acc: 0.9999
+ MNIST-M    | Train Loss: 0.0102 | Train Acc: 0.9976
+============ Test ============
+ MNIST      | Test  Loss: 0.2602 | Test  Acc: 0.9159
+ SVHN       | Test  Loss: 0.5033 | Test  Acc: 0.8912
+ USPS       | Test  Loss: 0.5629 | Test  Acc: 0.8331
+ SynthDigits| Test  Loss: 0.0143 | Test  Acc: 0.9963
+ MNIST-M    | Test  Loss: 0.9255 | Test  Acc: 0.7132
+============ Communication round 6 ============
+============ Train epoch 0 ============
+ MNIST      | Train Loss: 0.0289 | Train Acc: 0.9909
+ SVHN       | Train Loss: 0.2412 | Train Acc: 0.9277
+ USPS       | Train Loss: 0.0723 | Train Acc: 0.9816
+ SynthDigits| Train Loss: 0.0005 | Train Acc: 0.9999
+ MNIST-M    | Train Loss: 0.1689 | Train Acc: 0.9467
+============ Train epoch 1 ============
+ MNIST      | Train Loss: 0.0095 | Train Acc: 0.9970
+ SVHN       | Train Loss: 0.0962 | Train Acc: 0.9700
+ USPS       | Train Loss: 0.0153 | Train Acc: 0.9955
+ SynthDigits| Train Loss: 0.0003 | Train Acc: 1.0000
+ MNIST-M    | Train Loss: 0.0455 | Train Acc: 0.9847
+============ Train epoch 2 ============
+ MNIST      | Train Loss: 0.0050 | Train Acc: 0.9985
+ SVHN       | Train Loss: 0.0521 | Train Acc: 0.9846
+ USPS       | Train Loss: 0.0074 | Train Acc: 0.9979
+ SynthDigits| Train Loss: 0.0005 | Train Acc: 0.9999
+ MNIST-M    | Train Loss: 0.0205 | Train Acc: 0.9940
+============ Train epoch 3 ============
+ MNIST      | Train Loss: 0.0034 | Train Acc: 0.9990
+ SVHN       | Train Loss: 0.0323 | Train Acc: 0.9908
+ USPS       | Train Loss: 0.0034 | Train Acc: 0.9996
+ SynthDigits| Train Loss: 0.0004 | Train Acc: 0.9999
+ MNIST-M    | Train Loss: 0.0123 | Train Acc: 0.9968
+============ Train epoch 4 ============
+ MNIST      | Train Loss: 0.0021 | Train Acc: 0.9996
+ SVHN       | Train Loss: 0.0209 | Train Acc: 0.9945
+ USPS       | Train Loss: 0.0025 | Train Acc: 0.9997
+ SynthDigits| Train Loss: 0.0006 | Train Acc: 0.9998
+ MNIST-M    | Train Loss: 0.0084 | Train Acc: 0.9979
+============ Test ============
+ MNIST      | Test  Loss: 0.2922 | Test  Acc: 0.9125
+ SVHN       | Test  Loss: 0.4644 | Test  Acc: 0.9004
+ USPS       | Test  Loss: 0.6780 | Test  Acc: 0.8181
+ SynthDigits| Test  Loss: 0.0150 | Test  Acc: 0.9956
+ MNIST-M    | Test  Loss: 1.0551 | Test  Acc: 0.6682
+============ Communication round 7 ============
+============ Train epoch 0 ============
+ MNIST      | Train Loss: 0.0260 | Train Acc: 0.9921
+ SVHN       | Train Loss: 0.2176 | Train Acc: 0.9354
+ USPS       | Train Loss: 0.0637 | Train Acc: 0.9826
+ SynthDigits| Train Loss: 0.0003 | Train Acc: 1.0000
+ MNIST-M    | Train Loss: 0.1511 | Train Acc: 0.9518
+============ Train epoch 1 ============
+ MNIST      | Train Loss: 0.0096 | Train Acc: 0.9969
+ SVHN       | Train Loss: 0.0806 | Train Acc: 0.9752
+ USPS       | Train Loss: 0.0134 | Train Acc: 0.9962
+ SynthDigits| Train Loss: 0.0004 | Train Acc: 0.9999
+ MNIST-M    | Train Loss: 0.0398 | Train Acc: 0.9877
+============ Train epoch 2 ============
+ MNIST      | Train Loss: 0.0046 | Train Acc: 0.9987
+ SVHN       | Train Loss: 0.0430 | Train Acc: 0.9872
+ USPS       | Train Loss: 0.0062 | Train Acc: 0.9984
+ SynthDigits| Train Loss: 0.0003 | Train Acc: 0.9999
+ MNIST-M    | Train Loss: 0.0183 | Train Acc: 0.9949
+============ Train epoch 3 ============
+ MNIST      | Train Loss: 0.0027 | Train Acc: 0.9993
+ SVHN       | Train Loss: 0.0267 | Train Acc: 0.9929
+ USPS       | Train Loss: 0.0056 | Train Acc: 0.9985
+ SynthDigits| Train Loss: 0.0003 | Train Acc: 0.9999
+ MNIST-M    | Train Loss: 0.0110 | Train Acc: 0.9974
+============ Train epoch 4 ============
+ MNIST      | Train Loss: 0.0018 | Train Acc: 0.9997
+ SVHN       | Train Loss: 0.0161 | Train Acc: 0.9960
+ USPS       | Train Loss: 0.0037 | Train Acc: 0.9990
+ SynthDigits| Train Loss: 0.0003 | Train Acc: 1.0000
+ MNIST-M    | Train Loss: 0.0080 | Train Acc: 0.9979
+============ Test ============
+ MNIST      | Test  Loss: 0.2559 | Test  Acc: 0.9209
+ SVHN       | Test  Loss: 0.6466 | Test  Acc: 0.8714
+ USPS       | Test  Loss: 0.5188 | Test  Acc: 0.8565
+ SynthDigits| Test  Loss: 0.0124 | Test  Acc: 0.9967
+ MNIST-M    | Test  Loss: 0.9692 | Test  Acc: 0.7169
+============ Communication round 8 ============
+============ Train epoch 0 ============
+ MNIST      | Train Loss: 0.0227 | Train Acc: 0.9929
+ SVHN       | Train Loss: 0.2000 | Train Acc: 0.9400
+ USPS       | Train Loss: 0.0654 | Train Acc: 0.9834
+ SynthDigits| Train Loss: 0.0006 | Train Acc: 0.9998
+ MNIST-M    | Train Loss: 0.1363 | Train Acc: 0.9559
+============ Train epoch 1 ============
+ MNIST      | Train Loss: 0.0088 | Train Acc: 0.9972
+ SVHN       | Train Loss: 0.0699 | Train Acc: 0.9782
+ USPS       | Train Loss: 0.0141 | Train Acc: 0.9960
+ SynthDigits| Train Loss: 0.0002 | Train Acc: 1.0000
+ MNIST-M    | Train Loss: 0.0343 | Train Acc: 0.9888
+============ Train epoch 2 ============
+ MNIST      | Train Loss: 0.0043 | Train Acc: 0.9986
+ SVHN       | Train Loss: 0.0353 | Train Acc: 0.9897
+ USPS       | Train Loss: 0.0074 | Train Acc: 0.9978
+ SynthDigits| Train Loss: 0.0002 | Train Acc: 1.0000
+ MNIST-M    | Train Loss: 0.0161 | Train Acc: 0.9952
+============ Train epoch 3 ============
+ MNIST      | Train Loss: 0.0026 | Train Acc: 0.9992
+ SVHN       | Train Loss: 0.0205 | Train Acc: 0.9951
+ USPS       | Train Loss: 0.0041 | Train Acc: 0.9988
+ SynthDigits| Train Loss: 0.0008 | Train Acc: 0.9998
+ MNIST-M    | Train Loss: 0.0102 | Train Acc: 0.9970
+============ Train epoch 4 ============
+ MNIST      | Train Loss: 0.0017 | Train Acc: 0.9996
+ SVHN       | Train Loss: 0.0118 | Train Acc: 0.9975
+ USPS       | Train Loss: 0.0025 | Train Acc: 0.9993
+ SynthDigits| Train Loss: 0.0005 | Train Acc: 0.9999
+ MNIST-M    | Train Loss: 0.0064 | Train Acc: 0.9985
+============ Test ============
+ MNIST      | Test  Loss: 0.1467 | Test  Acc: 0.9553
+ SVHN       | Test  Loss: 0.5672 | Test  Acc: 0.8797
+ USPS       | Test  Loss: 0.9080 | Test  Acc: 0.7534
+ SynthDigits| Test  Loss: 0.0146 | Test  Acc: 0.9956
+ MNIST-M    | Test  Loss: 0.7656 | Test  Acc: 0.7613
+============ Communication round 9 ============
+============ Train epoch 0 ============
+ MNIST      | Train Loss: 0.0204 | Train Acc: 0.9933
+ SVHN       | Train Loss: 0.1807 | Train Acc: 0.9455
+ USPS       | Train Loss: 0.0672 | Train Acc: 0.9831
+ SynthDigits| Train Loss: 0.0004 | Train Acc: 0.9999
+ MNIST-M    | Train Loss: 0.1243 | Train Acc: 0.9596
+============ Train epoch 1 ============
+ MNIST      | Train Loss: 0.0082 | Train Acc: 0.9974
+ SVHN       | Train Loss: 0.0608 | Train Acc: 0.9807
+ USPS       | Train Loss: 0.0151 | Train Acc: 0.9949
+ SynthDigits| Train Loss: 0.0005 | Train Acc: 0.9999
+ MNIST-M    | Train Loss: 0.0311 | Train Acc: 0.9898
+============ Train epoch 2 ============
+ MNIST      | Train Loss: 0.0041 | Train Acc: 0.9988
+ SVHN       | Train Loss: 0.0324 | Train Acc: 0.9905
+ USPS       | Train Loss: 0.0050 | Train Acc: 0.9988
+ SynthDigits| Train Loss: 0.0003 | Train Acc: 1.0000
+ MNIST-M    | Train Loss: 0.0152 | Train Acc: 0.9955
+============ Train epoch 3 ============
+ MNIST      | Train Loss: 0.0025 | Train Acc: 0.9993
+ SVHN       | Train Loss: 0.0207 | Train Acc: 0.9942
+ USPS       | Train Loss: 0.0040 | Train Acc: 0.9989
+ SynthDigits| Train Loss: 0.0003 | Train Acc: 0.9999
+ MNIST-M    | Train Loss: 0.0091 | Train Acc: 0.9977
+============ Train epoch 4 ============
+ MNIST      | Train Loss: 0.0022 | Train Acc: 0.9993
+ SVHN       | Train Loss: 0.0112 | Train Acc: 0.9976
+ USPS       | Train Loss: 0.0021 | Train Acc: 0.9996
+ SynthDigits| Train Loss: 0.0002 | Train Acc: 1.0000
+ MNIST-M    | Train Loss: 0.0052 | Train Acc: 0.9990
+============ Test ============
+ MNIST      | Test  Loss: 0.1501 | Test  Acc: 0.9529
+ SVHN       | Test  Loss: 0.4493 | Test  Acc: 0.9087
+ USPS       | Test  Loss: 0.6263 | Test  Acc: 0.8271
+ SynthDigits| Test  Loss: 0.0136 | Test  Acc: 0.9962
+ MNIST-M    | Test  Loss: 0.6855 | Test  Acc: 0.7871
