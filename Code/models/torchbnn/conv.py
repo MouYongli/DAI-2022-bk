@@ -85,7 +85,6 @@ class _BayesConvNd(Module):
         stdv = 1.0 / math.sqrt(n)
         self.weight_mu.data.uniform_(-stdv, stdv)
         self.weight_log_sigma.data.fill_(self.prior_log_sigma)
-
         if self.bias:
             self.bias_mu.data.uniform_(-stdv, stdv)
             self.bias_log_sigma.data.fill_(self.prior_log_sigma)
@@ -134,7 +133,7 @@ class BayesConv2d(_BayesConvNd):
     """
 
     def __init__(self, in_channels, out_channels, kernel_size, stride=1, padding=0, dilation=1,
-                 groups=1, bias=True, padding_mode='zeros', prior_mu=0.0, prior_sigma=0.1):
+                 groups=1, bias=True, padding_mode='zeros', prior_mu=0.0, prior_sigma=1.0):
         kernel_size = _pair(kernel_size)
         stride = _pair(stride)
         padding = _pair(padding)
@@ -142,14 +141,25 @@ class BayesConv2d(_BayesConvNd):
         super(BayesConv2d, self).__init__(in_channels, out_channels, kernel_size, stride,
             padding, dilation, False, _pair(0), groups, bias, padding_mode, prior_mu, prior_sigma)
 
-    def conv2d_forward(self, input, weight):
-        if self.bias:
-            if self.bias_eps is None:
-                bias = self.bias_mu + torch.exp(self.bias_log_sigma) * torch.randn_like(self.bias_log_sigma)
+    def reparameterize(self):
+        if self.training:
+            if self.weight_eps is None:
+                weight = self.weight_mu + torch.exp(self.weight_log_sigma) * torch.randn_like(self.weight_log_sigma)
             else:
-                bias = self.bias_mu + torch.exp(self.bias_log_sigma) * self.bias_eps
+                weight = self.weight_mu + torch.exp(self.weight_log_sigma) * self.weight_eps
+            if self.bias:
+                if self.bias_eps is None:
+                    bias = self.bias_mu + torch.exp(self.bias_log_sigma) * torch.randn_like(self.bias_log_sigma)
+                else:
+                    bias = self.bias_mu + torch.exp(self.bias_log_sigma) * self.bias_eps
+            else:
+                bias = None
         else:
-            bias = None
+            weight, bias = self.weight_mu, self.bias_mu if self.bias else None
+        return weight, bias
+
+    def conv2d_forward(self, input):
+        weight, bias = self.reparameterize()
         if self.padding_mode == 'circular':
             expanded_padding = ((self.padding[1] + 1) // 2, self.padding[1] // 2,
                                 (self.padding[0] + 1) // 2, self.padding[0] // 2)
@@ -163,9 +173,5 @@ class BayesConv2d(_BayesConvNd):
         r"""
         Overriden.
         """
-        if self.weight_eps is None:
-            weight = self.weight_mu + torch.exp(self.weight_log_sigma) * torch.randn_like(self.weight_log_sigma)
-        else:
-            weight = self.weight_mu + torch.exp(self.weight_log_sigma) * self.weight_eps
 
-        return self.conv2d_forward(input, weight)
+        return self.conv2d_forward(input)

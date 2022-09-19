@@ -1,6 +1,5 @@
-from .models import DigitModel, AlexNet, DigitBayesModel
-import math
 import torch
+from .models import DigitModel, AlexNet, DigitBayesModel
 from .torchbnn.linear import BayesLinear
 from .torchbnn.batchnorm import BayesBatchNorm2d, BayesBatchNorm1d
 from .torchbnn.conv import BayesConv2d
@@ -15,7 +14,7 @@ def _kl_loss(mu_0, log_sigma_0, mu_1, log_sigma_1):
         log_sigma_1 (Float): log(standard deviation of normal distribution).
 
     """
-    kl = log_sigma_1 - log_sigma_0 + (torch.exp(log_sigma_0) ** 2 + (mu_0 - mu_1) ** 2) / (2 * math.exp(log_sigma_1) ** 2) - 0.5
+    kl = log_sigma_1 - log_sigma_0 + (torch.exp(log_sigma_0) ** 2 + (mu_0 - mu_1) ** 2) / (2 * torch.exp(log_sigma_1) ** 2) - 0.5
     return kl.sum()
 
 

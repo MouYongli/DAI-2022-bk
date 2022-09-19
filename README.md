@@ -84,3 +84,5 @@ CUDA_VISIBLE_DEVICES=3 nohup python -u ./fola.py --log --num-rounds 10 --num-epo
 
 
 ## Results
+
+python pfedbayes.py --log --num-rounds 10 --num-epochs 5 --num-data-mnist 729 --num-data-svhn 729 --num-data-usps 729 --num-data-synth 729 --num-data-mnistm 729 --importance-bayes 1.0

@@ -52,6 +52,7 @@ class BayesLinear(Module):
             init.uniform_(self.bias_mu, -bound, bound)
             self.bias_log_sigma.data.fill_(self.prior_log_sigma)
 
+    # TODO
     def reset_parameters(self):
         stdv = 1. / math.sqrt(self.weight_mu.size(1))
         self.weight_mu.data.uniform_(-stdv, stdv)
@@ -70,21 +71,28 @@ class BayesLinear(Module):
         if self.bias:
             self.bias_eps = None
 
+    def reparameterize(self):
+        if self.training:
+            if self.weight_eps is None:
+                weight = self.weight_mu + torch.exp(self.weight_log_sigma) * torch.randn_like(self.weight_log_sigma)
+            else:
+                weight = self.weight_mu + torch.exp(self.weight_log_sigma) * self.weight_eps
+            if self.bias:
+                if self.bias_eps is None:
+                    bias = self.bias_mu + torch.exp(self.bias_log_sigma) * torch.randn_like(self.bias_log_sigma)
+                else:
+                    bias = self.bias_mu + torch.exp(self.bias_log_sigma) * self.bias_eps
+            else:
+                bias = None
+        else:
+            weight, bias = self.weight_mu, self.bias_mu if self.bias else None
+        return weight, bias
+
     def forward(self, input):
         r"""
         Overriden.
         """
-        if self.weight_eps is None:
-            weight = self.weight_mu + torch.exp(self.weight_log_sigma) * torch.randn_like(self.weight_log_sigma)
-        else:
-            weight = self.weight_mu + torch.exp(self.weight_log_sigma) * self.weight_eps
-        if self.bias:
-            if self.bias_eps is None:
-                bias = self.bias_mu + torch.exp(self.bias_log_sigma) * torch.randn_like(self.bias_log_sigma)
-            else:
-                bias = self.bias_mu + torch.exp(self.bias_log_sigma) * self.bias_eps
-        else:
-            bias = None
+        weight, bias = self.reparameterize()
         return F.linear(input, weight, bias)
 
     def extra_repr(self):

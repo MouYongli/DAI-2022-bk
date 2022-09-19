@@ -78,6 +78,11 @@ class DigitBayesModel(nn.Module):
         x = self.fc3(x)
         return x
 
+    def reset_parameters(self):
+        for m in self.modules():
+            if isinstance(m, (BayesLinear, BayesConv2d, BayesBatchNorm2d, BayesBatchNorm1d)):
+                m.reset_parameters()
+
 class AlexNet(nn.Module):
     """
     used for DomainNet and Office-Caltech10

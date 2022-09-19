@@ -32,7 +32,7 @@ here = osp.dirname(osp.abspath(__file__))
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(description="PyTorch Fed VBI")
+    parser = argparse.ArgumentParser(description="PyTorch pFedBayes")
     parser.add_argument('--log', action='store_true', help ='whether to make a log')
     parser.add_argument('--num-data-mnist', type=int, default=60000, help='number of data of MNIST (max 60000)')
     parser.add_argument('--num-data-svhn', type=int, default=73257, help='number of data of SVHN (max 73257)')
@@ -46,11 +46,11 @@ if __name__ == '__main__':
 
     parser.add_argument('--num-rounds', type = int, default=10, help = 'number of rounds for communication') #100
     parser.add_argument('--num-epochs', type = int, default=1, help = 'number epochs of local training on client between communication')
-
+    parser.add_argument('--importance-bayes', type=float, default=1.0)
     parser.add_argument('--dp', type = str, default='none', help='differential privacy type: none, gaussian, laplacian')
     args = parser.parse_args()
 
-    exp_dir = osp.join(here, "../../Experiments", f"d_{args.num_data_mnist}_{args.num_data_svhn}_{args.num_data_usps}_{args.num_data_synth}_{args.num_data_mnistm}", "fvbi", f"r_{args.num_rounds}_e_{args.num_epochs}")
+    exp_dir = osp.join(here, "../../Experiments", f"d_{args.num_data_mnist}_{args.num_data_svhn}_{args.num_data_usps}_{args.num_data_synth}_{args.num_data_mnistm}", "pfedbayes", f"r_{args.num_rounds}_e_{args.num_epochs}")
     if not osp.exists(exp_dir):
         os.makedirs(exp_dir)
 
@@ -70,7 +70,7 @@ if __name__ == '__main__':
         log_path = os.path.join(exp_dir, "log")
         if not os.path.exists(log_path):
             os.makedirs(log_path)
-        logfile = open(os.path.join(log_path,'fvbi.log'), 'a')
+        logfile = open(os.path.join(log_path,'pfedbayes.log'), 'a')
         logfile.write('==={}===\n'.format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
         logfile.write('===Setting===\n')
         logfile.write('    lr: {}\n'.format(args.lr))
@@ -112,8 +112,10 @@ if __name__ == '__main__':
         for client_idx, train_loader in enumerate(train_loaders):
             client_global_model_set[client_idx] = client_global_model_set[client_idx].to(device)
             client_local_model_set[client_idx] = client_local_model_set[client_idx].to(device)
-            optimizer = optim.SGD(client_model_set[client_idx].parameters(), lr=args.lr)
-            client_model_set[client_idx].train()
+            client_global_optimizer = optim.SGD(client_global_model_set[client_idx].parameters(), lr=args.lr)
+            client_local_optimizer = optim.SGD(client_local_model_set[client_idx].parameters(), lr=args.lr)
+            client_global_model_set[client_idx].train()
+            client_local_model_set[client_idx].train()
             for ep in range(args.num_epochs):
                 num_data = 0
                 correct = 0
@@ -121,19 +123,25 @@ if __name__ == '__main__':
                 for batch_idx, (data, target) in enumerate(train_loader):
                     data, target = data.to(device), target.to(device)
                     num_data += target.size(0)
-                    optimizer.zero_grad()
-                    output = client_model_set[client_idx](data)
+                    client_local_optimizer.zero_grad()
+                    client_local_model_set[client_idx].reset_parameters()
+                    output = client_local_model_set[client_idx](data)
                     ce_loss = loss_fun(output, target)
-                    kl_loss = bayesian_kl_loss()
+                    kl_local_loss = bayesian_kl_loss(client_local_model_set[client_idx], client_global_model_set[client_idx]) if args.importance_bayes > 0 else 0.0
                     # 定义loss，包括ce loss和kl loss
-                    loss = ce_loss + args.importance_bayes
+                    loss = ce_loss + args.importance_bayes * kl_local_loss
                     loss.backward()
-
-                    optimizer.step()
+                    client_local_optimizer.step()
                     pred = output.data.max(1)[1]
                     correct += pred.eq(target.view(-1)).sum().item()
                     loss_all += loss.item()
-                train_loss, train_ce_loss, train_csd_loss, train_acc = loss_all / len(train_loader), correct / num_data
+
+                    client_global_optimizer.zero_grad()
+                    kl_global_loss = bayesian_kl_loss(client_global_model_set[client_idx], client_local_model_set[client_idx])
+                    kl_global_loss.backward()
+                    client_global_optimizer.step()
+
+                train_loss, train_acc = loss_all / len(train_loader), correct / num_data
                 print(' {:<11s}| Epoch {:02d} | Train Loss: {:.4f} | Train Acc: {:.4f}'.format(datasets[client_idx], ep, train_loss, train_acc))
                 if args.log: logfile.write(' {:<11s}| Epoch {:02d} | Train Loss: {:.4f} | Train Acc: {:.4f}'.format(datasets[client_idx], ep, train_loss, train_acc))
                 with open(osp.join(exp_dir, 'log.csv'), 'a') as f:
@@ -202,7 +210,7 @@ if __name__ == '__main__':
 
     torch.save({
         'server_model': server_model.state_dict(),
-    }, osp.join(exp_dir, "fola.pth"))
+    }, osp.join(exp_dir, "pfedbayes.pth"))
     if args.log:
         logfile.flush()
         logfile.close()
