@@ -76,10 +76,10 @@ CUDA_VISIBLE_DEVICES=3 nohup python -u ./fola.py --log --num-rounds 10 --num-epo
 CUDA_VISIBLE_DEVICES=3 nohup python -u ./fola.py --log --num-rounds 50 --num-epochs 1 --num-data-mnist 729 --num-data-svhn 729 --num-data-usps 729 --num-data-synth 729 --num-data-mnistm 729 --csd-importance 0.1 --clip 10 &> ./nohup_files/fola_partial_unbias_50_1_csd_1.out &
 CUDA_VISIBLE_DEVICES=3 nohup python -u ./fola.py --log --num-rounds 10 --num-epochs 5 --num-data-mnist 729 --num-data-svhn 729 --num-data-usps 729 --num-data-synth 729 --num-data-mnistm 729 --csd-importance 0.1 --clip 10 &> ./nohup_files/fola_partial_unbias_10_5_csd_1.out &
 
-CUDA_VISIBLE_DEVICES=3 nohup python -u ./fola.py --log --num-rounds 50 --num-epochs 1 --num-data-mnist 6000 --num-data-svhn 7325 --num-data-usps 729 --num-data-synth 47940 --num-data-mnistm 6000 --csd-importance 0.0 --clip 10 &> ./nohup_files/fola_partial_bias_50_1_csd_0.out &
-CUDA_VISIBLE_DEVICES=3 nohup python -u ./fola.py --log --num-rounds 10 --num-epochs 5 --num-data-mnist 6000 --num-data-svhn 7325 --num-data-usps 729 --num-data-synth 47940 --num-data-mnistm 6000 --csd-importance 0.0 --clip 10 &> ./nohup_files/fola_partial_bias_10_5_csd_0.out &
-CUDA_VISIBLE_DEVICES=3 nohup python -u ./fola.py --log --num-rounds 50 --num-epochs 1 --num-data-mnist 729 --num-data-svhn 729 --num-data-usps 729 --num-data-synth 729 --num-data-mnistm 729 --csd-importance 0.0 --clip 10 &> ./nohup_files/fola_partial_unbias_50_1_csd_0.out &
-CUDA_VISIBLE_DEVICES=3 nohup python -u ./fola.py --log --num-rounds 10 --num-epochs 5 --num-data-mnist 729 --num-data-svhn 729 --num-data-usps 729 --num-data-synth 729 --num-data-mnistm 729 --csd-importance 0.0 --clip 10 &> ./nohup_files/fola_partial_unbias_10_5_csd_0.out &
+CUDA_VISIBLE_DEVICES=1 nohup python -u ./fola.py --log --num-rounds 50 --num-epochs 1 --num-data-mnist 6000 --num-data-svhn 7325 --num-data-usps 729 --num-data-synth 47940 --num-data-mnistm 6000 --csd-importance 0.0 --clip 10 &> ./nohup_files/fola_partial_bias_50_1_csd_0.out &
+CUDA_VISIBLE_DEVICES=1 nohup python -u ./fola.py --log --num-rounds 10 --num-epochs 5 --num-data-mnist 6000 --num-data-svhn 7325 --num-data-usps 729 --num-data-synth 47940 --num-data-mnistm 6000 --csd-importance 0.0 --clip 10 &> ./nohup_files/fola_partial_bias_10_5_csd_0.out &
+CUDA_VISIBLE_DEVICES=1 nohup python -u ./fola.py --log --num-rounds 50 --num-epochs 1 --num-data-mnist 729 --num-data-svhn 729 --num-data-usps 729 --num-data-synth 729 --num-data-mnistm 729 --csd-importance 0.0 --clip 10 &> ./nohup_files/fola_partial_unbias_50_1_csd_0.out &
+CUDA_VISIBLE_DEVICES=1 nohup python -u ./fola.py --log --num-rounds 10 --num-epochs 5 --num-data-mnist 729 --num-data-svhn 729 --num-data-usps 729 --num-data-synth 729 --num-data-mnistm 729 --csd-importance 0.0 --clip 10 &> ./nohup_files/fola_partial_unbias_10_5_csd_0.out &
 ```
 
 
