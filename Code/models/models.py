@@ -83,6 +83,55 @@ class DigitBayesModel(nn.Module):
             if isinstance(m, (BayesLinear, BayesConv2d, BayesBatchNorm2d, BayesBatchNorm1d)):
                 m.reset_parameters()
 
+class DigitVariationalModel(nn.Module):
+    """
+    Model for benchmark experiment on Variational Digits.
+    """
+
+    def __init__(self, num_classes=10, hidden_dim=6272, **kwargs):
+        super(DigitVariationalModel, self).__init__()
+        self.conv1 = nn.Conv2d(3, 64, 5, 1, 2)
+        self.bn1 = nn.BatchNorm2d(64)
+        self.conv2 = nn.Conv2d(64, 64, 5, 1, 2)
+        self.bn2 = nn.BatchNorm2d(64)
+        self.conv3 = nn.Conv2d(64, 128, 5, 1, 2)
+        self.bn3 = nn.BatchNorm2d(128)
+        self.p = nn.Linear(hidden_dim, 2*hidden_dim)
+        self.fc1 = nn.Linear(6272, 2048)
+        self.bn4 = nn.BatchNorm1d(2048)
+        self.fc2 = nn.Linear(2048, 512)
+        self.bn5 = nn.BatchNorm1d(512)
+        self.fc3 = nn.Linear(512, num_classes)
+        self.hidden_dim = hidden_dim
+
+    def reparameterise(self, mu, logvar):
+        if self.training:
+            std = logvar.mul(0.5).exp_()
+            eps = std.data.new(std.size()).normal_()
+            return eps.mul(std).add_(mu)
+        else:
+            return mu
+
+    def forward(self, x):
+        x = func.relu(self.bn1(self.conv1(x)))
+        x = func.max_pool2d(x, 2)
+        x = func.relu(self.bn2(self.conv2(x)))
+        x = func.max_pool2d(x, 2)
+        x = func.relu(self.bn3(self.conv3(x)))
+        x = x.view(x.shape[0], -1)
+        x = self.p(x).view(-1, 2, self.hidden_dim)
+        mu = x[:, 0, :]
+        logvar = x[:, 1, :]
+        x = self.reparameterise(mu, logvar)
+        x = self.fc1(x)
+        x = self.bn4(x)
+        x = func.relu(x)
+        x = self.fc2(x)
+        x = self.bn5(x)
+        x = func.relu(x)
+        x = self.fc3(x)
+        return x, mu, logvar
+
 class AlexNet(nn.Module):
     """
     used for DomainNet and Office-Caltech10

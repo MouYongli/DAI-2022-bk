@@ -1,5 +1,5 @@
 import torch
-from .models import DigitModel, AlexNet, DigitBayesModel
+from .models import DigitModel, AlexNet, DigitBayesModel, DigitVariationalModel
 from .torchbnn.linear import BayesLinear
 from .torchbnn.batchnorm import BayesBatchNorm2d, BayesBatchNorm1d
 from .torchbnn.conv import BayesConv2d
@@ -71,8 +71,14 @@ def get_model(args):
     """
     # assert args.model in ["digit", "alexnet"]
     if args.model == "bayes":
+        print("Bayesian Model is used...")
         return DigitBayesModel()
+    elif args.model == "variational":
+        print("Variational Model is used...")
+        return DigitVariationalModel()
     else:
         # return AlexNet()
+        print("Digit Model is used...")
         return DigitModel()
+
 
