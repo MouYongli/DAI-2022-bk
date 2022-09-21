@@ -26,22 +26,26 @@ from models import get_model
 
 here = osp.dirname(osp.abspath(__file__))
 
+global eps
+eps = 1e-5
 
-def kl_loss_fn(mu_0, logvar_0, mu_1, logvar_1):
-    kl = 0.5 * logvar_1 - 0.5 * logvar_0 + (torch.exp(logvar_0) + (mu_0 - mu_1) ** 2) / (2 * torch.exp(logvar_1)) - 0.5
-    return kl.sum()
+def kld_loss_fn(mu_0, logvar_0, mu_1, logvar_1):
+    # KL(p0 || p1)
+    return 0.5 * torch.sum(logvar_1 - logvar_0 - 1 + (logvar_0.exp() + (mu_0 - mu_1).pow(2) / (logvar_1.exp()))) / (mu_0.shape[0] * mu_0.shape[1])
 
-
+def klg_loss_fn(mu, logvar):
+    kl = 0.5 * torch.sum(logvar.exp() - logvar - 1 + mu.pow(2)) / (mu.shape[0] * mu.shape[1])
+    return kl
 
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description="PyTorch FedVE")
     parser.add_argument('--log', action='store_true', help ='whether to make a log')
-    parser.add_argument('--num-data-mnist', type=int, default=60000, help='number of data of MNIST (max 60000)')
-    parser.add_argument('--num-data-svhn', type=int, default=73257, help='number of data of SVHN (max 73257)')
-    parser.add_argument('--num-data-usps', type=int, default=7291, help='number of data of USPS')
-    parser.add_argument('--num-data-synth', type=int, default=479400, help='number of data of Synthetic Digits')
-    parser.add_argument('--num-data-mnistm', type=int, default=60000, help='number of data of MNIST-M')
+    parser.add_argument('--num-data-mnist', type=int, default=729, help='number of data of MNIST (max 60000)')
+    parser.add_argument('--num-data-svhn', type=int, default=729, help='number of data of SVHN (max 73257)')
+    parser.add_argument('--num-data-usps', type=int, default=729, help='number of data of USPS')
+    parser.add_argument('--num-data-synth', type=int, default=729, help='number of data of Synthetic Digits')
+    parser.add_argument('--num-data-mnistm', type=int, default=729, help='number of data of MNIST-M')
 
     parser.add_argument('--model', type=str, default="variational", help='model types')
     parser.add_argument('--lr', type=float, default=1e-2, help='learning rate')
@@ -50,10 +54,12 @@ if __name__ == '__main__':
     parser.add_argument('--num-rounds', type = int, default=50, help = 'number of rounds for communication') #100
     parser.add_argument('--num-epochs', type = int, default=1, help = 'number epochs of local training on client between communication')
 
+    parser.add_argument('--use-bn', type=bool, default=False, help='use fedbn or not')
+    parser.add_argument('--kl-type', type = str, default='d', help='kld or klg loss: g~N(0,1), d~S(mu, sigma)')
     parser.add_argument('--dp', type = str, default='none', help='differential privacy type: none, gaussian, laplacian')
     args = parser.parse_args()
 
-    exp_dir = osp.join(here, "../../Experiments", f"d_{args.num_data_mnist}_{args.num_data_svhn}_{args.num_data_usps}_{args.num_data_synth}_{args.num_data_mnistm}", "fedve", f"r_{args.num_rounds}_e_{args.num_epochs}")
+    exp_dir = osp.join(here, "../../Experiments", f"d_{args.num_data_mnist}_{args.num_data_svhn}_{args.num_data_usps}_{args.num_data_synth}_{args.num_data_mnistm}", "fedve", f"r_{args.num_rounds}_e_{args.num_epochs}_{args.kl_type}_bn_{args.use_bn}")
     if not osp.exists(exp_dir):
         os.makedirs(exp_dir)
 
@@ -95,6 +101,7 @@ if __name__ == '__main__':
     print('Client alpha:', client_alpha)
 
     ce_loss_fun = nn.CrossEntropyLoss()
+    kl_loss_fn = kld_loss_fn if args.kl_type == "d" else klg_loss_fn
 
     server_model = get_model(args).to(device)
     client_model_set = [get_model(args) for _ in range(num_clients)]
@@ -125,13 +132,17 @@ if __name__ == '__main__':
                     num_data += target.size(0)
                     optimizer.zero_grad()
                     client_output, client_mu, client_logvar = client_model_set[client_idx](data)
-                    server_out, server_mu, server_logvar = server_model(data)
-                    ce_loss = ce_loss_fun(output, target)
-                    kld_loss = kl_loss_fn(server_mu, server_logvar, client_mu, client_logvar)
-                    loss = (1 / (1+rd)) * ce_loss + (rd / (1+rd)) * kld_loss
+                    ce_loss = ce_loss_fun(client_output, target)
+                    if args.kl_type == "d":
+                        server_output, server_mu, server_logvar = server_model(data)
+                        kld_loss = kl_loss_fn(client_mu, client_logvar, server_mu, server_logvar)
+                    else:
+                        kld_loss = kl_loss_fn(client_mu, client_logvar)
+                    # loss = (1 / (rd + 1)) * ce_loss + (rd / (rd + 1)) * kld_loss
+                    loss = ce_loss + kld_loss
                     loss.backward()
                     optimizer.step()
-                    pred = output.data.max(1)[1]
+                    pred = client_output.data.max(1)[1]
                     correct += pred.eq(target.view(-1)).sum().item()
                     loss_all += loss.item()
                 train_loss, train_acc = loss_all / len(train_loader), correct / num_data
@@ -141,21 +152,30 @@ if __name__ == '__main__':
                     log = [rd, ep, datasets[client_idx], 'train', train_loss, train_acc]
                     log = map(str, log)
                     f.write(','.join(log) + '\n')
-            # client_model_set[client_idx] = client_model_set[client_idx].cpu()
 
         ## communication for model aggregation
         with torch.no_grad():
             # aggregate params
-            for key in server_model.state_dict().keys():
-                if 'num_batches_tracked' in key:
-                    server_model.state_dict()[key].data.copy_(client_model_set[0].state_dict()[key])
-                else:
-                    temp = torch.zeros_like(server_model.state_dict()[key])
-                    for client_idx in range(num_clients):
-                        temp += client_alpha[client_idx] * client_model_set[client_idx].state_dict()[key]
-                    server_model.state_dict()[key].data.copy_(temp)
-                    for client_idx in range(num_clients):
-                        client_model_set[client_idx].state_dict()[key].data.copy_(server_model.state_dict()[key])
+            if args.use_bn:
+                for key in server_model.state_dict().keys():
+                    if 'bn' not in key:
+                        temp = torch.zeros_like(server_model.state_dict()[key], dtype=torch.float32)
+                        for client_idx in range(num_clients):
+                            temp += client_alpha[client_idx] * client_model_set[client_idx].state_dict()[key]
+                        server_model.state_dict()[key].data.copy_(temp)
+                        for client_idx in range(num_clients):
+                            client_model_set[client_idx].state_dict()[key].data.copy_(server_model.state_dict()[key])
+            else:
+                for key in server_model.state_dict().keys():
+                    if 'num_batches_tracked' in key:
+                        server_model.state_dict()[key].data.copy_(client_model_set[0].state_dict()[key])
+                    else:
+                        temp = torch.zeros_like(server_model.state_dict()[key])
+                        for client_idx in range(num_clients):
+                            temp += client_alpha[client_idx] * client_model_set[client_idx].state_dict()[key]
+                        server_model.state_dict()[key].data.copy_(temp)
+                        for client_idx in range(num_clients):
+                            client_model_set[client_idx].state_dict()[key].data.copy_(server_model.state_dict()[key])
 
         # start testing
         print("============ Test ============")
@@ -169,10 +189,7 @@ if __name__ == '__main__':
             for batch_idx, (data, target) in enumerate(test_loader):
                 data, target = data.to(device), target.to(device)
                 num_data += target.size(0)
-                if args.model == "variational":
-                    output, mu, logvar = client_model_set[client_idx](data)
-                else:
-                    output = client_model_set[client_idx](data)
+                output, mu, logvar = client_model_set[client_idx](data)
                 test_loss += ce_loss_fun(output, target).item()
                 pred = output.data.max(1)[1]
                 correct += pred.eq(target.view(-1)).sum().item()
@@ -183,9 +200,19 @@ if __name__ == '__main__':
                 log = [rd, '', datasets[client_idx], 'test', test_loss, test_acc]
                 log = map(str, log)
                 f.write(','.join(log) + '\n')
-    torch.save({
-        'server_model': server_model.state_dict(),
-    }, osp.join(exp_dir, "fedve.pth"))
+    if args.use_bn:
+        torch.save({
+            'model_0': client_model_set[0].state_dict(),
+            'model_1': client_model_set[1].state_dict(),
+            'model_2': client_model_set[2].state_dict(),
+            'model_3': client_model_set[3].state_dict(),
+            'model_4': client_model_set[4].state_dict(),
+            'server_model': server_model.state_dict(),
+        }, osp.join(exp_dir, "fedve.pth"))
+    else:
+        torch.save({
+            'server_model': server_model.state_dict(),
+        }, osp.join(exp_dir, "fedve.pth"))
     if args.log:
         logfile.flush()
         logfile.close()
